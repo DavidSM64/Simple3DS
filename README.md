@@ -1,6 +1,10 @@
 # Simple3DS v0.1
 A simple (and incomplete) .3ds model parser by davideesk
 
+## 3D-Studio File Format spec
+http://www.martinreddy.net/gfx/3d/3DS.spec
+http://www.martinreddy.net/gfx/3d/MLI.spec
+
 ## Parsing
 For objects it can parse faces, vertices, and texture coordinates. Normals are not part of the .3ds file spec, so those are generated at run-time.
 
