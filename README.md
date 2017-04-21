@@ -3,6 +3,7 @@ A simple (and incomplete) .3ds model parser by davideesk
 
 ## 3D-Studio File Format spec
 http://www.martinreddy.net/gfx/3d/3DS.spec
+
 http://www.martinreddy.net/gfx/3d/MLI.spec
 
 ## Parsing
