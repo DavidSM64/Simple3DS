@@ -6,26 +6,26 @@
 #include <vector>
 using namespace std;
 
-#define PRIMARY       0x4D4D				// Primary Chunk, at the beginning of each file
-#define OBJECTINFO    0x3D3D				// This gives the version of the mesh and is found right before the material and object information
-#define MESHVERSION   0x3D3E
-#define VERSION       0x0002				// This gives the version of the .3ds file
-#define KEYFRAMES     0xB000				// This is the header for all of the key frame info
-#define MATERIAL	  0xAFFF				// This stored the texture info
-#define OBJECT		  0x4000				// This stores the faces, vertices, etc...
-#define MATNAME       0xA000				// This holds the material name
-#define MATDIFFUSE    0xA020				// This holds the color of the object/material
-#define MATTRANSP     0xA050				// Material Transparency
-#define MATMAP        0xA200				// This is a header for a new material
-#define MATOPACITY    0xA210				
-#define MATMAPFILE    0xA300				// This holds the file name of the texture
-#define MATMAPPARAM	  0xA351				// Mapping Parameters
-#define OBJECT_MESH   0x4100				// This lets us know that we are reading a new object
-#define OBJECT_VERTICES     0x4110			// The objects vertices
-#define OBJECT_FACES		0x4120			// The objects faces
-#define OBJECT_MATERIAL		0x4130			// This is found if the object has a material, either texture map or color
-#define OBJECT_UV			0x4140			// The UV texture coordinates
-#define OBJECT_SMOOTH_GRP	0x4150			// The Smooth group of the mesh
+#define PRIMARY       		0x4D4D	// Primary Chunk, at the beginning of each file
+#define OBJECTINFO    		0x3D3D	// This gives the version of the mesh and is found right before the material and object information
+#define MESHVERSION   		0x3D3E
+#define VERSION       		0x0002	// This gives the version of the .3ds file
+#define KEYFRAMES     		0xB000	// This is the header for all of the key frame info
+#define MATERIAL      		0xAFFF	// This stored the texture info
+#define OBJECT	      		0x4000	// This stores the faces, vertices, etc...
+#define MATNAME       		0xA000	// This holds the material name
+#define MATDIFFUSE    		0xA020	// This holds the color of the object/material
+#define MATTRANSP     		0xA050	// Material Transparency
+#define MATMAP        		0xA200	// This is a header for a new material
+#define MATOPACITY    		0xA210				
+#define MATMAPFILE    		0xA300	// This holds the file name of the texture
+#define MATMAPPARAM	 	0xA351	// Mapping Parameters
+#define OBJECT_MESH   		0x4100	// This lets us know that we are reading a new object
+#define OBJECT_VERTICES     	0x4110	// The objects vertices
+#define OBJECT_FACES		0x4120	// The objects faces
+#define OBJECT_MATERIAL		0x4130	// This is found if the object has a material, either texture map or color
+#define OBJECT_UV		0x4140	// The UV texture coordinates
+#define OBJECT_SMOOTH_GRP	0x4150	// The Smooth group of the mesh
 #define OBJECT_LOCAL_COORD	0x4160
 #define OBJECT_VISIBLE		0x4165
 
@@ -153,7 +153,7 @@ namespace Simple3DS {
 				ifs.read((char*)&tri->index[0], 2); // First Face Index
 				ifs.read((char*)&tri->index[1], 2); // Second Face Index
 				ifs.read((char*)&tri->index[2], 2); // Third Face Index
-				ifs.read((char*)&v, 2);				// Some visibilty flag (Not needed)
+				ifs.read((char*)&v, 2);	// Some visibilty flag (Not needed)
 				obj->addTriangle(tri);
 			}
 			return 2 + numFaces*8;
@@ -168,10 +168,10 @@ namespace Simple3DS {
 				if (!data.swapUpAxis) {			// Pass in as normal values.
 					ifs.read((char*)&v->y, 4);	// y position of vertex
 					ifs.read((char*)&v->z, 4);	// z position of vertex
-				} else {						// Need to swap the Y & Z positions.
+				} else {				// Need to swap the Y & Z positions.
 					ifs.read((char*)&v->z, 4);	// y position of vertex
 					ifs.read((char*)&v->y, 4);	// z position of vertex
-					v->z = -v->z;				// Negate z value
+					v->z = -v->z;			// Negate z value
 				}
 				obj->addVertex(v);
 			}
@@ -219,10 +219,10 @@ namespace Simple3DS {
 				if (checkIfHasSubNodes(child->id)) {
 					int readLeftChild = child->len - 6;
 					switch (child->id) {
-						case OBJECT:			readLeftChild -= parse_OBJECT(child, ifs, data); break;
-						case OBJECT_FACES:		readLeftChild -= parse_OBJECT_FACES(child, ifs, data); break;
-						case MATMAP:			readLeftChild -= parse_MATMAP(child, ifs, data); break;
-						case MATERIAL:			data.addMaterial(new Material()); break;
+						case OBJECT:		readLeftChild -= parse_OBJECT(child, ifs, data); break;
+						case OBJECT_FACES:	readLeftChild -= parse_OBJECT_FACES(child, ifs, data); break;
+						case MATMAP:		readLeftChild -= parse_MATMAP(child, ifs, data); break;
+						case MATERIAL:		data.addMaterial(new Material()); break;
 					}
 					child->readChildren(ifs, readLeftChild, data);
 				} else {
@@ -258,28 +258,28 @@ namespace Simple3DS {
 		}
 		inline string getName() {
 			switch (id) {
-				case PRIMARY:				return "Root";
-				case VERSION:				return "Version";
-				case OBJECTINFO:			return "Object Info";
-				case OBJECT_MESH:			return "Object Mesh";
-				case KEYFRAMES:				return "Keyframes";
-				case MATERIAL:				return "Material";
-				case OBJECT:				return "Object";
-				case MESHVERSION:			return "Mesh Version";
+				case PRIMARY:			return "Root";
+				case VERSION:			return "Version";
+				case OBJECTINFO:		return "Object Info";
+				case OBJECT_MESH:		return "Object Mesh";
+				case KEYFRAMES:			return "Keyframes";
+				case MATERIAL:			return "Material";
+				case OBJECT:			return "Object";
+				case MESHVERSION:		return "Mesh Version";
 				case OBJECT_VERTICES:		return "Object Vertices";
-				case OBJECT_FACES:			return "Object Faces";
+				case OBJECT_FACES:		return "Object Faces";
 				case OBJECT_MATERIAL:		return "Object Materials";
-				case OBJECT_UV:				return "Object UV";
+				case OBJECT_UV:			return "Object UV";
 				case OBJECT_SMOOTH_GRP:		return "Smooth Group";
 				case OBJECT_LOCAL_COORD:	return "Local Coordinates";
 				case OBJECT_VISIBLE:		return "Object Visibilty?";
-				case MATNAME:				return "Mat Name";
-				case MATDIFFUSE:			return "Mat Diffuse";
-				case MATMAP:				return "Mat Texture Map";
-				case MATMAPFILE:			return "Mat Texture File";
-				case MATMAPPARAM:			return "Mat Texture Parameters";
-				case MATTRANSP:				return "Mat Transparency";
-				default:					return "UNKNOWN";
+				case MATNAME:			return "Mat Name";
+				case MATDIFFUSE:		return "Mat Diffuse";
+				case MATMAP:			return "Mat Texture Map";
+				case MATMAPFILE:		return "Mat Texture File";
+				case MATMAPPARAM:		return "Mat Texture Parameters";
+				case MATTRANSP:			return "Mat Transparency";
+				default:			return "UNKNOWN";
 			}
 		}
 	};
